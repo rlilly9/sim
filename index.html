@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pool Material Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Pool Material Simulator</h2>
+    
+    <!-- Form to choose variables -->
+    <form id="simulatorForm">
+        <label for="materialType">Type of Material:</label>
+        <select id="materialType" name="materialType">
+            <option value="plastic">Plastic</option>
+            <option value="vinyl">Vinyl</option>
+        </select><br><br>
+
+        <label for="arrangement">Arrangement of Material:</label>
+        <select id="arrangement" name="arrangement">
+            <option value="layer">Layer the material</option>
+            <option value="bubbles">Create bubbles of air</option>
+            <option value="insulation">Include an insulation layer</option>
+        </select><br><br>
+
+        <label for="color">Color of Material:</label>
+        <select id="color" name="color">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+        </select><br><br>
+
+        <button type="button" onclick="runSimulation()">Run Simulation</button>
+    </form>
+
+    <!-- Table to display results -->
+    <h3>Simulation Results</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Type of Material</th>
+                <th>Arrangement of Material</th>
+                <th>Color of Material</th>
+                <th>Interaction with Sunlight</th>
+                <th>Avg Temperature of Pool Water</th>
+                <th>Reduction in Evaporation (%)</th>
+            </tr>
+        </thead>
+        <tbody id="resultsTable">
+            <tr>
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- JavaScript for simulation logic -->
+    <script>
+        function runSimulation() {
+            // Get selected values from form
+            const materialType = document.getElementById("materialType").value;
+            const arrangement = document.getElementById("arrangement").value;
+            const color = document.getElementById("color").value;
+
+            // Variables to determine based on selection
+            let sunlightInteraction;
+            let avgTemp;
+            let evaporationReduction;
+
+            // Simple logic based on material, arrangement, and color
+            if (materialType === "plastic") {
+                sunlightInteraction = "Reflects sunlight moderately";
+                avgTemp = color === "light" ? "26°C" : "28°C";
+                evaporationReduction = arrangement === "bubbles" ? "20%" : arrangement === "insulation" ? "35%" : "15%";
+            } else if (materialType === "vinyl") {
+                sunlightInteraction = "Absorbs sunlight more";
+                avgTemp = color === "light" ? "24°C" : "30°C";
+                evaporationReduction = arrangement === "bubbles" ? "25%" : arrangement === "insulation" ? "40%" : "18%";
+            }
+
+            // Update the existing table row instead of inserting new rows
+            const resultsTable = document.getElementById("resultsTable");
+            resultsTable.innerHTML = `
+                <tr>
+                    <td>${materialType}</td>
+                    <td>${arrangement}</td>
+                    <td>${color}</td>
+                    <td>${sunlightInteraction}</td>
+                    <td>${avgTemp}</td>
+                    <td>${evaporationReduction}</td>
+                </tr>
+            `;
+        }
+    </script>
+
+</body>
+</html>
